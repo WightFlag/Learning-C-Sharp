@@ -1,503 +1,1431 @@
-﻿using System;
+﻿
+
+//LINQ #1 -- shows how the three parts of a query operation execute.
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        //first comes data
+        int[] nums = new[] {1,2,3,4,5,6,7,8,9, };
+        //then comes LINQ
+        var evens = from i in nums where i % 2 == 0 select i;
+        //then comes output
+        foreach(int i in evens)
+        {
+            Console.Write($"{i} ");
+        }
+        Console.ReadKey();
+    }
+}
+
+
+/*
+//Recursion #9 -- find the factorial of a given number using recursion.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine(Factorial(5,1));
+        Console.ReadKey();
+    }
+    static int Factorial(int num, int prod)
+    {
+        if (num < 1)
+            return prod;
+        return num * Factorial(num - 1, prod);
+    }
+}
+
+
+/*
+//Recursion #8 -- Check whether a given String is Palindrome or not using recursion.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Please enter a string and I will tell you if it is a palindrome: ");
+        string input = Console.ReadLine();
+        Console.WriteLine(isPal(input, 0));
+        Console.ReadKey();
+    }
+    static bool isPal (string input, int ctr)
+    {
+        if (ctr > input.Length - ctr)
+            return true;
+        if (input[input.Length - 1 - ctr] != input[0 + ctr])
+            return false;
+        return isPal(input, ++ctr);        
+    }
+}
+
+
+/*
+//Recursion #7 -- check whether a number is prime or not using recursion.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Enter a number and I will tell you if it is a prime: ");
+        int input = Convert.ToInt32(Console.ReadLine());
+        int divisor = Convert.ToInt32(Math.Sqrt(input));
+        Console.WriteLine(isPrime(input, divisor));
+        Console.ReadKey();
+    }
+    static bool isPrime (int num, int div)
+    {
+       if (div < 2)
+            return true;
+       if (num % div == 0)
+            return false;
+       return isPrime(num, div - 1);
+    }
+}
+
+
+/*
+//Recursion #6 -- print even or odd numbers in a given range using recursion - solution allows for user choice of even or odd
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        PrintNums(21, true);
+        Console.ReadKey();
+    }
+    static void PrintNums(int range, bool even)
+    {
+        if(range > 0)
+        {
+            if (even == true && range % 2 == 0)
+            {
+                PrintNums(range - 2, even);
+                Console.WriteLine(range);
+            }
+            if (even == true & range % 2 != 0)
+            {
+                PrintNums(range - 1, even);
+            }
+            if (even == false && range % 2 != 0)
+            {
+                PrintNums(range - 2, even);
+                Console.WriteLine(range);
+            }
+            if (even == false && range % 2 == 0)
+            {
+                PrintNums(range - 1, even);
+            }
+        }
+    }
+}
+
+
+/*
+//Recursion #5 -- count the number of digits in a number using recursion.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Diagnostics;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine(Count(12345, 0));
+        Console.ReadKey();
+    }
+    static int Count(int num, int digs)
+    {
+        if (num < 1)    
+            return digs;
+        digs++;
+        return Count(num / 10, digs);
+    }
+}
+
+
+/*
+//Recursion #4 -- display the individual digits of a given number using recursion
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        PrintDigs(12345);
+        Console.ReadKey();
+    }
+    static void PrintDigs (int num)
+    {
+        if (num < 10)
+        {
+            Console.Write(num);
+            return;
+        }
+        PrintDigs(num / 10);
+        Console.Write(" {0}", (num % 10));
+    }
+}
+
+
+/*
+//Recursion #3 -- find the sum of first n natural numbers using recursion.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine(SumNums(-10));
+        Console.ReadKey();
+    }
+    static int SumNums(int input)
+    {
+        if (input > 0)
+            input += SumNums(input - 1);
+        return input;
+    }
+}
+
+
+/*
+//Recursion #2 -- print numbers from n to 1 using recursion
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        PrintNums(10);
+        Console.ReadKey();
+    }
+    static void PrintNums(int input)
+    {
+        if (input > 0)
+        {
+            Console.WriteLine(input);
+            PrintNums(input - 1);
+        }
+    }
+}
+
+
+ /*
+//Recursion #1 -- print the first n natural number using recursion-Revised solution since learning that code
+//following the recursive call, will execute back down the stack once the if condition returns false.
+//previously I had thought this would be unreachable code. This solution was subsequently shared by someone  else.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+class Program
+{
+    public static void Main()
+    {
+        PrintNums(10);
+        Console.ReadKey();
+    }
+    static void PrintNums(int input)
+    {
+        if(input > 0)
+        {
+            PrintNums(input - 1);
+            Console.WriteLine(input);
+        }
+    }
+}
+
+
+/*
+//Recursion #4 sample code from site. Learned from it that code following the recursive method will still
+//be executed before the return call is executed because it is all on the stack. In this case, it is
+//the n % 10 call. exciting stuff!
+using System;
+public class RecExercise4
+{
+    static void Main()
+    {
+
+        Console.Write("\n\n Recursion : Display the individual digits of a given number :\n");
+        Console.Write("------------------------------------------------------------------\n");
+        Console.Write(" Input any number : ");
+        int num = Convert.ToInt32(Console.ReadLine());
+        Console.Write(" The digits in the number {0} are : ", num);
+        separateDigits(num);
+        Console.Write("\n\n");
+        Console.ReadKey();
+    }
+
+    static void separateDigits(int n)
+    {
+        if (n < 10)
+        {
+            Console.Write("{0}  ", n);
+            return;
+        }
+        separateDigits(n / 10);
+        Console.Write(" {0} ", n % 10);
+    }
+}
+
+/*
+//Recursion #4 -- display the individual digits of a given number using recursion
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Please enter a number:");
+        int input = Convert.ToInt32(Console.ReadLine());
+        printDigit(input);
+        Console.ReadKey();
+    }
+    static void printDigit(int num)
+    {
+        Console.Write("{0}, ", num.ToString()[0]);
+        if (num < 10)
+            return;
+        string chars = num.ToString().Remove(0, 1);
+        printDigit(Convert.ToInt32(chars));
+    }
+}
+
+/*
+//Recursion #3 -- find the sum of the first n natural numbers using recursion
+using System;
+    class Program
+    {
+        static void Main()
+        {
+        Console.Write("How many numbers would you like to sum? ");
+        int input = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("The sum of numbers 0 through {0} is: {1}", input, sumNums(input));
+        Console.ReadKey();
+        }
+        static int sumNums(int length)
+        {
+            if (length < 1)
+                return length;
+            return length + sumNums(length - 1);
+        }
+    }
+
+
+/*
+//Recursion #3 -- find the sum of first n natural numbers using recursion
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Xml.Schema;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            Sum(25);
+            Console.ReadKey();
+        }
+
+        public static void Sum(int length)
+        {
+            Stack<int> numStack = new Stack<int>();
+            SumNumStack(numStack, length);
+        }
+        private static void SumNumStack(Stack<int> stackIn, int length)
+        {
+            stackIn.Push(length);
+            if(length < 1)
+            {
+                while(stackIn.Count() > 0)
+                {
+                    length += stackIn.Pop();
+                }
+                Console.WriteLine(length);
+                return;
+            }
+            SumNumStack(stackIn, length - 1);
+        }
+    }
+}
+
+
+/*
+//Recursion #2 -- print numbers from n to 1 using recursion
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            CountDown(20);
+            Console.ReadKey();
+        }
+
+        public static void CountDown (int length)
+        {
+            Console.WriteLine(length);
+            if (length < 1)
+            {
+                return;
+            }
+            CountDown(length - 1);
+        }
+    }
+}
+
+
+/*
+//Recursion #1 -- print the first n natural number using recursion
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
-namespace r_dailyprogrammer
+namespace cFun
+{
+    class Program
+    {
+        public static Stack numStack = new Stack();
+
+        static void Main()
+        {
+            PrintNums(10);
+            Console.ReadKey();
+        }
+        
+        public static void PrintNums (int length)
+        {
+            if (length < 1)
+            {
+                while(numStack.Count > 0)
+                {
+                    Console.WriteLine(numStack.Pop());
+                }
+                return;
+            }
+            numStack.Push(length);
+            PrintNums(length - 1);
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #62 -- reverse the strings contained in each pair of matching parentheses in a given string
+//and also remove the parentheses within the given string.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine(RemRev("ab(cd(ef)gh)ij"));
+
+            Console.ReadKey();
+        }
+
+        public static string RemRev(string str)
+        {
+            int lastOp = str.LastIndexOf('(');
+            if(lastOp == -1)
+            {
+                return str;
+            }
+            int firstCl = str.IndexOf(')', lastOp);
+            return RemRev(str.Substring(0, lastOp) + new string(str.Substring(lastOp + 1, firstCl - lastOp-1).Reverse().ToArray()) + str.Substring(firstCl + 1));
+        }
+    }
+}
+
+
+
+/*
+//Basic Exercise #61 -- sort the integers in ascending order without moving the number -5.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Globalization;
+using System.Data.SqlTypes;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] nums = new int[] { 3, 1, 8, 2, -5, 4, 9, 7, 6 };
+            Console.WriteLine(string.Join(",", sort(nums)));
+
+            Console.ReadKey();
+        }
+
+        public static int[] sort(int[] num)
+        {
+            int[] outs = num.Where(x => x != -5).OrderBy(x => x).ToArray();
+            int c = 0;
+            return num.Select(x => x != -5 ? outs[c++] : -5).ToArray();
+        }
+    }
+}
+
+/*
+//Basic Exervise #18 -- check two given integers and return true if one is negative and one is positive.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Enter an integer: ");
+            int num1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter a second integer: ");
+            int num2 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(num1 < 0 ^ num2 < 0);
+
+            Console.ReadKey();
+        }
+    }
+}
+
+/*
+//Basic Exercise #62 -- reverse the strings contained in each pair of matching parentheses in a given string 
+//and also remove the parentheses within the given string.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("enter a string: ");
+            string input = Console.ReadLine();
+            Console.WriteLine(swap(input));
+
+            Console.ReadKey();
+        }
+        
+        public static string swap(string phrase)
+        {
+            int dex1 = phrase.IndexOf("(");
+            int dex2 = phrase.IndexOf(")");
+            string sOut1 = phrase.Substring(dex1, dex2-dex1+1);
+            phrase = phrase.Remove(dex1, dex2-dex1+1);
+            Console.WriteLine(phrase);
+            int dex3 = phrase.IndexOf("(");
+            int dex4 = phrase.IndexOf(")");
+            string sOut2 = phrase.Substring(dex3, dex4 - dex3 +1);
+            phrase = phrase.Insert(dex1, sOut2);
+            phrase = phrase.Remove(phrase.IndexOf("("), 1);
+            phrase = phrase.Remove(phrase.IndexOf(")"), 1);
+            dex3 = phrase.IndexOf("(");
+            dex4 = phrase.IndexOf(")");
+            phrase = phrase.Remove(phrase.IndexOf("("), sOut2.Length);
+            phrase = phrase.Insert(dex3, sOut1);
+            phrase = phrase.Remove(phrase.IndexOf("("), 1);
+            phrase = phrase.Remove(phrase.IndexOf(")"), 1);
+
+            return phrase;
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #61 -- sort the integers in ascending order without moving the number -5.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[] tests = new int[] { 3, 8, 2, 4, -5, 7, 6, 9, 1 };
+            Console.WriteLine(string.Join(", ", sort(tests)));
+
+            Console.ReadKey();
+        }
+
+        public static int[] sort(int[] ints)
+        {
+            int[] outs = ints.Where(v => v != -5).OrderBy(v => v).ToArray();
+            int c = 0;
+            return ints.Select(x => x != -5 ? outs[c++] : -5).ToArray();
+        }
+    }
+}
+
+//Baisc Exerise #61 -- This was my first go before I learned this can be addressed much more elegantly with lambda and LINQ!
+/*
+namespace cFun
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] tests = new[] { 3, 8, 2, 4, -5, 7, 6, 9, 1 };
+            sort(tests);
+
+            Console.ReadKey();
+        }
+
+        public static void sort (int[] ints)
+        {
+            int[] outs1st = new int[] { };
+            int[] outs2nd = new int[] { };
+            List<int> outsAll = new List<int>();
+
+            Array.Resize(ref outs1st, Array.IndexOf(ints, -5) + 1);
+            Array.Copy(ints, outs1st, Array.IndexOf(ints, -5));
+
+            Array.Resize(ref outs2nd, ints.Length - Array.IndexOf(ints, -5) - 1);
+            Array.Copy(ints, Array.IndexOf(ints, -5) + 1, outs2nd, 0, ints.Length - Array.IndexOf(ints, -5)-1);
+
+            Array.Sort(outs1st);
+            Array.Sort(outs2nd);
+
+            outsAll.AddRange(outs1st);
+            outsAll.Add(-5);
+            outsAll.AddRange(outs2nd);
+
+            Console.WriteLine(string.Join(",", outsAll));
+        }
+    }
+}
+
+
+
+
+/*
+//Basic Exercise #60 -- calculate the sum of all the intgers of a rectangular matrix except those integers which are located below an intger of value 0.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+
+namespace cFun
+{
+    class Program
+    {
+        //Example code from site. The 'for' loop works because it sums vertically and fails to continue on the first
+        //occurence of a 0 in the column due to the " && my_matrix[j][i] > 0" condition.
+        public static int sum_matrix_elements(int[][] my_matrix)
+        {
+            int x = 0;
+            for (int i = 0; i < my_matrix[0].Length; i++)
+                for (int j = 0; j < my_matrix.Length && my_matrix[j][i] > 0; j++)
+                    x += my_matrix[j][i];
+
+            return x;
+        }
+
+        public static void Main()
+        {
+            Console.WriteLine(sum_matrix_elements(
+                new int[][] {
+                    new int[]{0, 2, 3, 2},
+                    new int[]{0, 6, 0, 1},
+                    new int[]{4, 0, 3, 0}
+                }));
+            Console.WriteLine(sum_matrix_elements(
+                new int[][] {
+                    new int[]{1, 2, 1, 0 },
+                    new int[]{0, 5, 0, 0},
+                    new int[]{1, 1, 3, 10 }
+                }));
+            Console.WriteLine(sum_matrix_elements(
+                new int[][] {
+                    new int[]{1, 1},
+                    new int[]{2, 2},
+                    new int[]{3, 3},
+                    new int[]{4, 4}
+                }));
+
+            Console.ReadKey();
+        }
+    }
+}
+        /*
+        static void Main()
+        {
+            int[,] nums = new[,] { {0, 2, 3, 2 },
+                                   {0, 6, 0, 1 },
+                                   {4, 0, 3, 0 } };
+
+            Console.WriteLine(noZero(nums));
+            Console.ReadKey();
+
+        }
+        //calculate sum of numbers in a matrix which do not fall beneath a 0.
+        public static int noZero(int[,] numbers)
+        {
+            var sum = 0;
+            for (var v = 0; v < numbers.GetLength(0); v++)
+            {
+                for (var w = 0; w <numbers.GetLength(1); w++)
+                {
+                    if(v == 0)
+                    {
+                        sum += numbers[v,w];
+                        continue;
+                    }
+                    for (var x = v-1; x >= 0; x--)
+                    {
+                        if (numbers[x,w] == 0)
+                        {
+                            break;
+                        }
+                        sum += numbers[v,w];
+                    }
+                }
+            }
+            return sum;
+            }
+    }
+}
+
+
+/*
+//Basic Exercise #59 -- check whether it is possible to create a strictly increasing sequence from a given sequence of integers as an array.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[] strIn = new[] {1,3,4,5 };
+            Console.WriteLine(allUnique(new int [] { 1, 3, 4, 5 }));
+            Console.WriteLine(allUnique(new int[] { 4, 3, 2, 5 }));
+            Console.ReadKey();
+        }
+        //checks if elements of an array may be arranged in a strictly increasing order.
+        public static bool allUnique (int[] arrIn)
+        {
+            Array.Sort(arrIn);
+            return (arrIn.Last() - arrIn.First() +1 == arrIn.Length);
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #58 -- Write a C# program which will accept a list of integers and checks how many integers are needed to complete the range
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.ComponentModel;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[] strIn = new[] { 1, 3, 4, 7, 9 };
+            Console.WriteLine(missInts(strIn));
+            Console.ReadKey();
+        }
+        
+        public static int missInts (int[] ints)
+        {
+            int count = 0;
+            Array.Sort(ints);
+            for (var v = 0; v < ints.Length-1; v++)
+            {
+                count += ints[v + 1] - ints[v] - 1;
+            }
+            return count;
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #57 -- find the pair of adjacent elements that has the highest product of an given array of integers.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[] iArr = new[] { 1, 2, 3, 4, 8, 1, 9, 3, 5, 2 };
+            int prod = 0;
+            for (var i = 0; i < iArr.Length - 1; i++)
+            {
+                prod = Math.Max(iArr[i] * iArr[i + 1], prod);
+            }
+            Console.WriteLine(prod);
+            Console.ReadKey();
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #56 -- check if a given string is a palindrome or not
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main()
+        {
+            string input;
+            Console.Write("Please enter a string and I will tell you whether it is a palindrome or not: ");
+            input = Console.ReadLine();
+            Console.WriteLine(string.Join("", input.ToCharArray().Reverse()));
+            Console.WriteLine(input == string.Join("", input.ToCharArray().Reverse()));
+            Console.WriteLine(isPalindrome(input));
+            Console.ReadKey();
+        }
+
+        public static bool isPalindrome (string str)
+        {
+            for(var i = 0; i <str.Length; i++)
+            {
+                if(str[i] != str[str.Length - 1 - i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #55 -- find the pair of adjacent elements that has the largest product of an given array.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.ComponentModel;
+
+namespace cFun
 {
     class Program
     {
         static void Main (string[] args)
         {
-            Console.WriteLine("This is just a test");
-            Console.WriteLine("this is another test");
-            Console.WriteLine("here is one more");
-            Console.WriteLine("trying this out");
-            Console.WriteLine("okay, here we go");
-        }
-    }
-
-}
-
-/*
-//[2018-05-16] Challenge #361 [Intermediate] ElsieFour low-tech cipher - link: https://www.reddit.com/r/dailyprogrammer/comments/8jvbzg/20180516_challenge_361_intermediate_elsiefour/
-//utlizes Marker.cs and KeyTable.cs. Uncomment those too to run.
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Net.Http.Headers;
-using System.Security.Cryptography;
-
-namespace r_dailyprogrammer
-{
-    class Program
-    {
-        public static KeyTable cKey = new KeyTable();
-
-        static void Main(string[] args)
-        {
-            string encryptedIn;
-            string keyIn;
-
-            Console.WriteLine("Type /quit at any time to end decryptions.");
-
-            while(true)
-            {
-                Console.WriteLine("Please enter an encrypted text string");
-                encryptedIn = Console.ReadLine();
-                if (encryptedIn == "/quit") { break; };
-
-                Console.WriteLine("Please enter the associated key");
-                keyIn = Console.ReadLine();
-                if (keyIn == "/quit") { break; };
-
-                Console.WriteLine();
-                Decrypt(encryptedIn, keyIn);
-                Console.WriteLine();
-            }            
-            Console.WriteLine("\n press any key to continue...");
+            int[] iAr = new[] { 1, 2, 4, 1, 3, 5, 0, 1 };
+            Console.WriteLine(LP(iAr));
             Console.ReadKey();
         }
 
-        public static void Decrypt(string encrypted, string key)
+        public static int LP (int[] array)
         {
-            Marker cMarker = new Marker();
-            Marker pText = new Marker();
-            Marker cText = new Marker();
-            Queue decrypted = new Queue();
-
-            cKey.Populate(key);
-
-            cMarker.Text = cKey.Table[0, 0];
-
-            for (int i = 0; i < encrypted.Length; i++)
+            int LProd = 0;
+            for (var i = 0; i < array.Length - 1; i++) 
             {
-                cText.Text = encrypted[i];
-
-                cText.Update();
-                pText.Update(cText);
-                
-                pText.MoveNeg(KeyTable.cRange.IndexOf(cMarker.Text) % 6, KeyTable.cRange.IndexOf(cMarker.Text) / 6);
-
-                decrypted.Enqueue(pText.Text);
-                cKey.Permute(cKey.Table, pText, cText, cMarker);
+                LProd = (array[i] * array[i + 1]) > LProd ? array[i] * array[i + 1] : LProd;
             }
-
-            Console.Write("Decrypted message: ");
-            for(int i = 0; i < encrypted.Length; i++)
-            {
-                Console.Write(decrypted.Dequeue());
-            }
-            Console.WriteLine();
-        }
-    }
-}
-
-//[2018-04-23] Challenge #358 [Easy] Decipher The Seven Segments
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.IO;
-using System.IO.Pipes;
-
-namespace r_dailyprogrammer
-{
-    class Program
-    {
-        static Dictionary<char, string[]> numDic = new Dictionary<char, string[]>()
-            {
-                {'1', new [] {"   ","  |","  |" } },
-                {'2', new [] {" _ "," _|","|_ "} },
-                {'3', new [] {" _ ", " _|", " _|"} },
-                {'4', new [] {"   ", "|_|", "  |"} },
-                {'5', new [] {" _ ", "|_ ", " _|" } },
-                {'6', new [] {" _ ", "|_ ", "|_|" } },
-                {'7', new [] {" _ ", "  |", "  |" } },
-                {'8', new [] {" _ ", "|_|", "|_|" } },
-                {'9', new [] {" _ ", "|_|", " _|" } },
-                {'0', new [] {" _ ", "| |", "|_|" } }
-            };
-
-        static Dictionary<string, char> numDic2 = new Dictionary<string, char>()
-            {
-                {"     |  |", '1' },
-                {" _  _||_ ", '2' },
-                {" _  _| _|", '3' },
-                {"   |_|  |", '4' },
-                {" _ |_  _|", '5' },
-                {" _ |_ |_|", '6' },
-                {" _   |  |", '7' },
-                {" _ |_||_|", '8' },
-                {" _ |_| _|", '9' },
-                {" _ | ||_|", '0' }
-            };
-
-        static Stack<string> numStack = new Stack<string>();
-
-        static Queue<string> numQueue = new Queue<string>();
-
-        static void Main(string[] args)
-        {
-            string uInput;
-            string sInput1;
-            string sInput2;
-            string sInput3;
-            string path = Path.Combine(Environment.CurrentDirectory, "numbersDoc.txt");
-
-            StreamReader file = new StreamReader(path);
-
-            Console.WriteLine("Please enter a number");
-            uInput = Convert.ToString(Console.ReadLine());
-
-            ToAnalog(uInput);
-
-            Console.WriteLine($"Reading from {path}");
-
-            sInput1 = file.ReadLine();
-            sInput2 = file.ReadLine();
-            sInput3 = file.ReadLine();
-
-            Console.WriteLine(sInput1);
-            Console.WriteLine(sInput2);
-            Console.WriteLine(sInput3);
-
-            Console.WriteLine();
-
-            ToDigital(sInput1, sInput2, sInput3);
-
-            Console.WriteLine();
-            Console.WriteLine();
-
-            Console.Write("press any key to continue...");
-            Console.ReadKey();
-        }
-
-        static void ToAnalog(string number)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < number.Length; j++)
-                {
-                    if (numDic.ContainsKey(number[j]))
-                    {
-                        numStack.Push(numDic[number[j]][i]);
-                    }
-                }
-                numStack.Reverse();
-                do
-                {
-                    Console.Write("{0}", numStack.Pop());
-                } while (numStack.Count() > 0);
-                Console.WriteLine();
-
-            }
-        }
-
-        static void ToDigital (string s1, string s2, string s3)
-        {
-            for (int i = 0; i < s1.Length/3; i++)
-            {
-                numQueue.Enqueue(string.Join(s2.Substring(i * 3, 3), s1.Substring(i * 3, 3), s3.Substring(i * 3, 3)));
-            }
-            do
-            {
-                Console.Write(numDic2[numQueue.Dequeue()]);
-            } while (numQueue.Count() > 0);
+            return LProd;
         }
     }
 }
 
 
 /*
+//Basic Exercise #54 -- get the century from a year
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Resources;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Schema;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Linq;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Enter a year and I will tell you the century in which it falls: ");
+            int year = Convert.ToInt32(Console.ReadLine());
+            int century = year / 100 + (year % 100 == 0? 0:1);
+            Console.WriteLine(century);
+            Console.ReadKey();
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #53 --  check if an array contains an odd number
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+
+namespace cFun
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] iAr = new[] { 2, 4, 7, 8, 6 };
+            for (var i = 0; i < iAr.Length; i++)
+            {
+                if (iAr[i] % 2 != 0)
+                {
+                    Console.WriteLine(iAr.Contains(iAr[i]));
+                    break;
+                }
+            }   
+            Console.ReadKey();
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #52 -- create a new array of length containing the middle elements of three arrays (each length 3) of integers.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] iAr1 = new[] { 1, 2, 5 };
+            int[] iAr2 = new[] { 0, 3, 8 };
+            int[] iAr3 = new[] { -1, 0, 2 };
+            int[] iAr4 = new[] { iAr1[1], iAr2[1], iAr3[1] };
+            foreach (int i in iAr4) { Console.Write($"{i}, "); }
+            Console.ReadKey();
+        }
+    }
+}
+
+
+/*
+//Basic Exerise #51 -- get the larger value between first and last element of an array (length 3) of integers.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] iArr = new[] { 1, 2, 5, 7, 8 };
+            var high = 0;
+            for (var i = 0; i < iArr.Length; i++)
+            {
+                if (iArr[i] > high) { high = iArr[i]; }
+            }
+            Console.WriteLine(high);
+            if (iArr.First() > iArr.Last())
+            {
+                Console.WriteLine(iArr.First());
+            }
+            else { Console.WriteLine(iArr.Last()); }
+            Console.ReadKey();
+        }
+    }
+}
+
+
+/*
+//Basic Exervise #50 -- Write a C# program to rotate an array (length 3) of integers in left direction
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] iArr = new[] { 1, 2, 8 };
+            iArr[0] += iArr[1]; iArr[1] += iArr[2];
+            iArr[2] -= (iArr[1] - iArr[0]); iArr[0] -= iArr[2]; iArr[1] -= iArr[0];
+            Console.WriteLine(string.Join(", ", iArr));
+            Console.ReadKey();
+        }
+    }
+}
+
+
+/*
+// Basic Exercise #49 -- Write a C# program to check if the first element or the last element of the two arrays ( length 1 or more) are equal.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main (string[] args)
+        {
+            int[] iArr1 = new[] { 1, 2, 2, 3, 3, 4, 5, 6, 5, 7, 7, 7, 8, 8, 1 };
+            int[] iArr2 = new[] { 1, 2, 2, 3, 3, 4, 5, 6, 5, 7, 7, 7, 8, 8, 5 };
+            Console.WriteLine((iArr1.First() == iArr2.First()) || (iArr1.Last() == iArr2.Last()));
+            Console.ReadKey();
+        }
+    }
+}
+
+
+/*
+///Basic Exercise #48 -- Write a C# program to check if the first element and the last element are equal of an array of integers and the length is 1 or more.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main (string[] args)
+        {
+            int[] iArr = new[] { 1, 2, 2, 3, 3, 4, 5, 6, 5, 7, 7, 7, 8, 8, 1 };
+            Console.WriteLine((iArr.First() == iArr.Last()) && iArr.Length > 1);
+            Console.ReadKey();
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #47 -- Write a C# program to compute the sum of all the elements of an array of integers.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] iArr = new[] { 1, 2, 2, 3, 3, 4, 5, 6, 5, 7, 7, 7, 8, 8, 1 };
+            Console.WriteLine(iArr.Aggregate((a, b) => a +b));
+            Console.ReadKey();
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #46 -- Write a C# program to check if a number appears as either the first or last element of an array of integers and the length is 1 or more.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercise
+{
+    class Program
+    {
+        static void Main (string[] args)
+        {
+            Console.WriteLine("Enter an integer: ");
+            int input = Convert.ToInt32(Console.ReadLine());
+            int[] iArray = new[] { 1, 3, 5, 7, 3, 5, 42, 13, 46, 15 };
+            Console.WriteLine(lastOrFirst(input, iArray));
+            Console.WriteLine((iArray.First() == input) || (iArray.Last() == input));
+
+            Console.ReadKey();
+        }
+
+        static public bool lastOrFirst(int inp, int[] iArr)
+        {
+            if (inp == iArr.First() || inp == iArr.Last())
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+}
+
+/*
+//Basic Exercise #45
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main (string[] args)
+        {
+            List<int> intArray = new List<int> ();
+            Random rnd = new Random();
+            int input;
+
+
+            //populate list
+            for (int i = 0; i < 100; i++)
+            {
+                intArray.Add(i % 5 + rnd.Next(7));
+            }
+
+            //populate array
+            Console.Write("Stored array: {0}", string.Join(", ", intArray));
+            Console.WriteLine();
+
+            Console.Write("Please enter a an integer and I will count the number of times it appears in the stored array: ");
+            input = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("The number {0} occurs {1} times in the stored array.", input, intArray.Count(i => i == input));
+
+
+            Console.ReadKey();
+
+        }
+    }
+}
+
+
+/*
+//Basic Exercise #44
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Xml;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main(string [] args)
+        {
+            Console.WriteLine("Enter a string and I will make a new one from ever other character:");
+            string input = Console.ReadLine();
+
+            var output = from c in input where input.IndexOf(c) % 2 != 0 select c;
+
+            Console.WriteLine(string.Join("", output));
+
+            Console.ReadKey();
+        }
+    }
+}
+
+/*
+//Basic Exercise #43
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string input;
+
+            Console.WriteLine("please enter a string and I will tell you if it begins with a 'w' and is immediately followed by two sets of 'ww': ");
+            input = Console.ReadLine();
+            Console.WriteLine(Checker(input));
+            Console.ReadKey();
+        }
+
+        public static bool Checker(string inputString)
+        {
+            if (inputString.Length > 4 && inputString.StartsWith("w") && inputString.Substring(1,2) == "ww" && inputString.Substring(3,2) == "ww")
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+}
+
+/*
+//Basic Exercise #42
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string input;
+            List<char> output = new List<char>();
+
+            Console.WriteLine("Please enter a string: ");
+            input = Console.ReadLine();
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (i < 4)
+                {
+                    output.Add(char.ToUpper(input[i]));
+                }
+                else { output.Add(input[i]); }
+            }
+            foreach(char c in output)
+            {
+                Console.Write(c);
+            }
+            Console.ReadKey();            
+        }
+    }
+}
+
+/*
+//Basic Exerise #41
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main (string[] args)
+        {
+            string input;
+            char w = 'w';
+
+            Console.WriteLine($"Please enter a string of characters and I will detremine if it contains the character {w} between 1 and 3 times: " );
+            input = Console.ReadLine();
+
+            
+            //if (input.Contains('w'))
+            //{
+            //    var ws = from c in input where c == w select c;
+            //    Console.WriteLine($"The character '{w}' occurs {ws.Count()} times in the string that you entered.");
+            //}
+            //else { Console.WriteLine("The string that you entered does not contain a 'w'"); }
+            
+
+            var ws = from c in input where c == w select w;
+
+            if (ws.Count() < 4 && ws.Count() > 0)
+            {
+                Console.WriteLine("The string that you entered contains a 'w' between 1 and 3 times.");
+            }
+            else { Console.WriteLine("The string that you entered does not contain a 'w' between 1 and 3 times."); }
+
+            Console.ReadKey();
+        }
+    }
+}
+    
+/*
+//Basic Exercise #40
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int cntrl = 20;
+            int inp1;
+            int inp2;
+
+            Console.WriteLine("Please enter an integer: ");
+            inp1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Please enter another integer and I will determine which is closer to 20: ");
+            inp2 = Convert.ToInt32(Console.ReadLine());
+
+            if (Math.Abs(cntrl-inp1) > Math.Abs(cntrl - inp2))
+            {
+                Console.WriteLine($"{inp2} is closer to {cntrl} than {inp1}.");
+            }
+            else { Console.WriteLine($"{inp1} is closer to {cntrl} than {inp2}."); }
+
+            Console.ReadKey();
+        }
+    }
+}
+
+/*
+//basic exercise # 39
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Collections;
 using System.Runtime.InteropServices.ComTypes;
 
-namespace r_dailyprogrammer
+namespace w3Reasource_Exercises
 {
-    //[2018-05-09] Challenge #360 [Intermediate] Find the Nearest Aeroplane
-
     class Program
-    { 
+    {
         static void Main(string[] args)
         {
-            Location uLocation = new Location();
-            Interaction uInteraction = new Interaction();
-            Shape earth = new Shape();
-            string loc1 = " ";
-            string loc2 = " ";
-            double elevation;
+            int[] intArray = new int[3];
+            Queue intQueye = new Queue();
+            List<int> intList = new List<int>();
 
-            Console.WriteLine("Please enter all coordinates in the following 15 character format: yy.yyyy,xx.xxxx");
-            loc1 = uInteraction.GetLoc("1");
-            loc2 = uInteraction.GetLoc("2");
-            elevation = uInteraction.GetHeight();
-            earth.Sphere(uLocation.GetX(loc1), uLocation.GetY(loc1), uLocation.GetX(loc2), uLocation.GetY(loc2), elevation);
-
-            Console.WriteLine("press enter to continue...");
-            Console.ReadLine();
-        }
-    }
-
-    class Interaction
-    {
-        static char[] uInputParam = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.' };
-        static int maxInputLength = 15;
-
-
-        public string GetLoc(string locNum)
-        {
-            string loc = "";
-
-            while (true)
+            for(int i = 0; i <3; i++)
             {
-                Console.WriteLine("Please enter the latitude and longitude of location #{0}: ", locNum);
-                loc = Console.ReadLine();
-                if (Validate(loc)) return loc;
-                Console.WriteLine("Invalid coordinates.");
+                Console.WriteLine("Please enter an integer:");
+                intList.Add(Convert.ToInt32(Console.ReadLine()));
             }
+
+            Console.WriteLine("Unsorted intList: {0}", string.Join(", ", intList));
+            intList.Sort();
+            Console.WriteLine("Sorted intList: {0}", string.Join(", ", intList));
+
+            Console.WriteLine($"Largest number {intList[2]}, Smallest number: {intList[0]}");
+
+            Console.ReadKey();
         }
-
-        public double GetHeight()
-        {
-            string uInput;
-            
-            while (true)
-            {
-                Console.WriteLine("Please enter an elevation: ");
-                uInput = (Console.ReadLine());
-                if (ValidateH(uInput)) return double.Parse(uInput);
-                Console.WriteLine("Invalid height in kilometers.");
-                                
-            }
-        }
-
-        public static bool Validate(string input) //checks user input against input parameters
-        {
-            if (input.Length != maxInputLength) return false;
-            if (!input.Contains(",")) return false;
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (Array.IndexOf(uInputParam, input[i]) == -1) return false;
-            }
-            return true;
-        }
-        
-        public static bool ValidateH(string input)
-        {
-            if (input.Contains(",")) return false;
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (Array.IndexOf(uInputParam, input[i]) == -1) return false;
-            }
-            return true;
-        }
-    }
-
-    class Location
-    {
-        double yCoord;          //latitude
-        double xCoord;          //longitude
-
-        public double GetX(string input)
-        {
-            int index = input.IndexOf(',');
-
-            xCoord = Convert.ToDouble(input.Substring(0, index));
-
-            return (xCoord);
-        }
-        public double GetY(string input)
-        {
-            int index = input.IndexOf(',') + 1;
-
-            yCoord = Convert.ToDouble(input.Substring(index, (input.Length - index)));
-
-            return (yCoord);
-        }
-    }
-
-    class Shape
-    {
-        double xChord;          //x chord length - distance along x-axis (difference in longitude along given latitude)
-        double yChord;          //y chord length - distance along y-axis (difference in latitude along given longitude)
-        double hypChord;        //hypotenuse chord length - direct distance between points
-        double arcLength;       //actual distance between points on sphere
-
-        double thetaSph;        //angle of separation between points on sphere
-        double thetaChrd;       //angle of separation between point on sphere and point above
-        double elevation;       //distance of object from face of sphere
-
-        public void Sphere(double lat1, double long1, double lat2, double long2, double height)
-        {
-            double radius = 6371;   //of earth
-            thetaSph = Math.Abs((lat1 - lat2));         //calculates x angle as absolute value of delta between long values.
-            thetaSph = thetaSph * Math.PI / 180;        //converts to radian for subsequent Math.Sin operation
-            yChord = (2 * (radius * (Math.Sin(thetaSph / 2))));
-            Console.WriteLine("The Chord length of the X component is: {0:.00} km", yChord);
-
-            thetaSph = Math.Abs((long1 - long2));       //calculates x angle as absolute value of delta between long values.
-            thetaSph = thetaSph * Math.PI / 180;        //converts to radian for subsequent Math.Sin operation
-            xChord = (2 * (radius * (Math.Sin(thetaSph / 2))));
-            Console.WriteLine("The Chord length of the Y component is: {0:.00} km", xChord);
-
-            hypChord = Math.Sqrt((xChord * xChord + yChord * yChord));
-
-            Console.WriteLine("The chord length between points on the surface is {0:.00} km", hypChord);
-            Console.WriteLine("The real distance between the points is: {0:.00} km", (Math.Sqrt((height * height) + (hypChord * hypChord))));
-        }
-
     }
 }
-    //[2018-04-30] Challenge #359 [Easy] Regular Paperfold Sequence Generator - COMPLETE
-    /*
-    class Program
-    {
 
 
-        static void Main(string[] args)
-        {
-            string s1 = "1";
-            string s1Check = "1101100111001001110110001100100111011001110010001101100011001001110110011100100111011000110010001101100111001000110110001100100111011001110010011101100011001001110110011100100011011000110010001101100111001001110110001100100011011001110010001101100011001001110110011100100111011000110010011101100111001000110110001100100111011001110010011101100011001000110110011100100011011000110010001101100111001001110110001100100111011001110010001101100011001000110110011100100111011000110010001101100111001000110110001100100";
-            int h = 3;
-            int k = 0;
-
-            Console.WriteLine(s1);
-
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < h; j += 2)
-                {
-                    if (k == 0)
-                    {
-                        s1 = s1.Insert(j, "1");
-                        k = 1;
-                    }
-                    else
-                    {
-                        s1 = s1.Insert(j, "0");
-                        k = 0;
-                    }
-                }
-                Console.WriteLine(s1);
-                h = (2 * s1.Length + 1);
-            }
-
-            Console.WriteLine("\n" + string.Compare(s1, s1Check, false) + "\n");
-
-            Console.WriteLine("press enter to continue...");
-            Console.ReadLine();
-        }
-
-    }*/
-
-// [2018-05-14] Challenge #361 [Easy] Tally Program - COMPLETE
 /*
-class Program
+//Basic Exercise # 38
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace w3Resource_Exercises
 {
-    static int[] scores = { 0, 0, 0, 0, 0 };
-    static string input;
-    static string choice;
-    static string[] pWins = { "a", "b", "c", "d", "e" };
-    static string[] pLosses = { "A", "B", "C", "D", "E" };
-    static int scoreChange;
-
-    static void Main(string[] args)
+    class Program
     {
-
-
-        do
+        static void Main (string[] args)
         {
-            Console.WriteLine("Would you liek to begin tracking scores? y/n (type exit to exit at anytime!)");
-            choice = Console.ReadLine();
+            string input = "PHP";
+            Console.WriteLine(input);
 
-            if (string.Compare(choice, "y", true) == 0)
+            if (input.StartsWith("PH"))
             {
-                Console.WriteLine("okay! let's DO itttt!!!!...");
-                do
-                {
-                    Console.WriteLine("enter player wins as (a,b,c,d,e) and losses as (A,B,C,D,E):");
-                    input = Console.ReadLine();
-
-                    scoreChange = UpdateScore(input, scores.Length);
-
-                    if (scoreChange > 0)
-                    {
-                        Console.WriteLine("okay! +1 to {0}", input);
-                    }
-                    if (scoreChange < 0)
-                    {
-                        Console.WriteLine("okay! -1 to {0}", input);
-                    }
-
-                    if ((string.Compare(input, "scores", true) == 0))
-                    {
-                        displayScore(scores.Length);
-                    }
-
-
-                } while( string.Compare(input, "exit", true) != 0);
+                string output = input.Substring(0, 2);
+                Console.WriteLine(output);
             }
-            else if (string.Compare(choice, "n", true) == 0)
-            {
-                Console.WriteLine("okay then...");
-            }
-            else if ((string.Compare(choice, "exit", true)) != 0)
-            {
-                Console.WriteLine("That ain't a proper answer to a y/n question!!");
-            }
-        } while (string.Compare(choice, "exit", true) != 0);
 
-        Console.WriteLine("press enter to continue...");
-        Console.ReadLine();            
-    }
-
-    private static int UpdateScore(string input, int length)
-    {
-
-        for (int i = 0; i < length; i++)
-        {
-            if ((string.Compare(input, pWins[i], false) == 0))
-            {
-                scores[i]++;
-                scoreChange = 1;
-                return (scoreChange);
-            }
-            else if ((string.Compare(input, pWins[i], true) == 0))
-            {
-                scores[i]--;
-                scoreChange = -1;
-                return (scoreChange);
-            }               
+            Console.ReadKey();
         }
-        return (0);
-    }
-
-    static void displayScore(int length)
-    {
-        Console.WriteLine("new scores are: ");
-        Console.WriteLine("player | score");
-
-        for(int i = 0; i < length; i++)
-        {
-            Console.WriteLine("  {0}   |   {1}", pWins[i], scores[i]);
-        }
-
     }
 }
-}*/
+
+/*
+//Basic Exercise # 37
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace w3Resource_Exercises
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string aString = "PHP Tutorial";
+            Console.WriteLine(aString);
+
+            //if(Convert.ToString(aString[1]) == "H" && Convert.ToString(aString[2]) == "P")
+            if(aString.Contains("HP") && aString.IndexOf("HP") == 1)
+            {
+                aString = aString.Remove(1, 2);
+                Console.WriteLine(aString);
+
+                Console.ReadKey();
+            }
+
+        }
+    }
+}
+*/
