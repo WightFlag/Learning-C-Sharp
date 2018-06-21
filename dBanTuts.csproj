@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4916B378-0FD4-426D-8E6F-C98DD517D3B0}</ProjectGuid>
+    <ProjectGuid>{82EA2F07-D060-4BB8-B916-FF45D8A39611}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>w3Resource_Exercises</RootNamespace>
-    <AssemblyName>w3Resource Exercises</AssemblyName>
+    <RootNamespace>dBanTuts</RootNamespace>
+    <AssemblyName>dBanTuts</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,8 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="w4Resource Exercises.cs" />
+    <Compile Include="Animal.cs" />
+    <Compile Include="BankAcct.cs" />
+    <Compile Include="Circle.CS" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="Shape.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

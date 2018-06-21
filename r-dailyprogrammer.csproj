@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="KeyTable.cs" />
     <Compile Include="Marker.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="r-daillyprogrammer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

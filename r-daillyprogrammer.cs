@@ -16,7 +16,6 @@ namespace r_dailyprogrammer
             Console.WriteLine("okay, here we go");
         }
     }
-
 }
 
 /*

@@ -1,5 +1,490 @@
 ﻿
 
+//Set a struct called "Date" that contains date, including: year, month and day. 
+//Also, define a class called "Phone" that contains a name, number, date of birth and address. 
+//Need to create an array that contains objects of type Phone and sort them by name, number, and date.
+
+using System;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Security;
+
+namespace testSpaceStackQuestionThing
+{
+    class Program
+    {
+        static void Main()
+        {
+            Phone[] phones = new Phone[]
+            {
+            new Phone("Jack", "555-555-5555", 1996,02,13, "123 Some Street"),
+            new Phone("Jane", "555-555-5553", 1996,04,15, "123 Some Street"),
+            new Phone("Lucy", "555-555-5557", 1997,01,03, "123 Some Street")
+            };
+            
+            Console.ReadKey();
+
+        }
+        public struct Date
+        {
+            int Year, Month, Day;
+            public Date(int year, int month, int day)
+            {
+                this.Year = year;
+                this.Month = month;
+                this.Day = day;
+            }
+        }
+    }
+
+    public struct Date
+    {
+        public int Year, Month, Day;
+        public Date(int[] date)
+        {
+            this.Year = date[0];
+            this.Month = date[1];
+            this.Day = date[2];
+        }
+    }
+
+    class Phone
+    {
+        public string Name;
+        public string Number;
+        public Date DoB = new Date();
+        public string Address;
+
+        public Phone(string name, string number, int year, int month, int day, string address)
+        {
+            this.Name = name;
+            this.Number = number;
+            this.DoB.Year = year;
+            this.DoB.Month = month;
+            this.DoB.Day = day;
+            this.Address = address;
+        }
+
+        public static void SortPhones(Phone[] phones)
+        {
+
+        }
+    }
+}
+
+
+
+
+/*
+//File Handling #1 -- create a blank file in the disk newly.
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        string path = @"C:\Users\rloyd\source\repos\w3Resource Exercises\textfiles";
+        FileInfo textfile = new FileInfo(path + "\\textfile.txt");
+        textfile.Directory.Create();
+        FileStream fs = textfile.Create();
+
+        Console.WriteLine($"A new text file as been created at {path}");
+
+         fs.Close();
+
+        Console.ReadKey();
+    }
+}
+
+
+/*
+//Searching and Sorting #1 -- sort a list of elements using Shell sort.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numarray = new[] { 2, 17, 3, 5, 1, 4, 20, 9, 15, 8, 13, 14, 7, 19, 18, 6 };
+        ShellSort(numarray, numarray.Length);
+
+        foreach (var num in numarray)
+        {
+            Console.Write($"{ num}, ");
+        }
+
+        Console.ReadKey();
+    }
+    static void ShellSort(int[] nums, int length)
+    {
+        int inc = 3;
+        while(inc > 0)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                int j = i;
+                int temp = nums[i];
+                while ((j >= inc) && (nums[j - inc] > temp))
+                {
+                    nums[j] = nums[j - inc];
+                    j = j - inc;
+                }
+                nums[j] = temp;
+            }
+            if (inc / 2 != 0)
+                inc = inc / 2;
+            else if (inc == 1)
+                inc = 0;
+            else
+                inc = 1;
+        }
+
+    }
+}
+
+
+/*
+//Structure #1 -- declare a simple structure.
+using System;
+using System.Security.Cryptography.X509Certificates;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Please enter a number: ");
+        int inp1 = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Please enter a number: ");
+        int inp2 = Convert.ToInt32(Console.ReadLine());
+        Simple inpSum = new Simple (inp1, inp2);
+        Console.WriteLine($"The sum of {inp1} and {inp2} is {inpSum.Sum()}");
+        Console.ReadKey();
+    }
+    struct Simple
+    {
+        public int x;
+        public int y;
+
+        public Simple(int inX, int inY)
+        {
+            x = inX;
+            y = inY;
+        }
+
+        public int Sum ()
+        {
+            return x + y;
+        }
+    }
+}
+
+
+/*
+//For Loop #5 -- display the cube of the number upto given an integer.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Please enter the number of cubes you would like: ");
+        int input = Convert.ToInt32(Console.ReadLine());
+        for(int i = 1; i < input +1; i++)
+        {
+            Console.WriteLine($"Number is: {i} and the cube of {i} is: {cube(i)}");
+        }
+        Console.ReadKey();
+    }
+    static int cube(int num)
+    {
+        return num * num * num;
+    }
+}
+
+
+/*
+//For Loop #4 -- read 10 numbers from keyboard and find their sum and average.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int input = 0;
+        double avg = 0;
+        for (int i = 1; i < 11; i++)
+        {
+            Console.Write("\nPlease enter a number: ");
+            input = Convert.ToInt32(Console.ReadLine());
+            avg = ((avg * (i - 1)) + input) / i;
+            Console.WriteLine("\nThe sum of the numbers entered is {0} and the average is {1}.", avg*i, avg);
+        }
+        Console.ReadKey();
+    }
+}
+
+
+/*
+//For Loop #3 -- display n terms of natural number and their sum.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Please enter the number of numbers you would like to see: ");
+        int input = Convert.ToInt32(Console.ReadLine());
+        numSumCount(input);
+        Console.ReadKey();
+    }
+    static void numSumCount(int nums)
+    {
+        int sum = 0;
+        Console.Write("The first {0} natural numbers are: ", nums);
+        for (int i = 1; i <= nums; i++)
+        {
+            Console.Write(i + ", ");
+            sum += i;
+        }
+        Console.WriteLine("\nThe sum of these numbers is: " + sum);
+    }
+}
+
+
+/*
+//For Loop #2 -- find the sum of first 10 natural numbers
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        sumNums(10);
+        Console.ReadKey();
+    }
+    static void sumNums (int count)
+    {
+        int sum = 0;
+        for(int i = 1; i <= count; i++)
+        {
+            sum += i;
+        }
+        Console.WriteLine(sum);
+    }
+}
+
+
+/*
+//For Loop #1 -- display the first 10 natural numbers.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        writeNums(10);
+        Console.ReadKey();
+    }
+    static void writeNums(int count)
+    {
+        for(int i = 0; i < 11; ++i)
+        {
+            Console.Write(i + " ");
+        }
+    }
+}
+
+
+/*
+//Conditionals #5 --  read the age of a candidate and determine whether it is eligible for casting his/her own vote.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Please enter your age: ");
+        int input = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("{0}", QualifyAge(input));
+        Console.ReadKey();
+    }
+    static string QualifyAge(int age)
+    {
+        if (age >= 18)
+            return "Congratulations! You are eligible to vote!";
+        return "We are very sorry, but you are not eligible to vote :c";
+    }
+}
+
+
+/*
+//Conditionals #4 -- find whether a given year is a leap year or not
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Please enter a year and I will determine whether it is a leap year or not: ");
+        int input = Convert.ToInt32(Console.ReadLine());
+        Console.Write("The year {0} {1} a leap year.", input, isLeap(input) == true? "is" : "is not");
+        Console.ReadKey();
+    }
+    static bool isLeap(int year)
+    {
+        if (year % 4 == 0)
+            return true;
+        return false;
+    }
+}
+
+
+/*
+//Conditionals #3 -- check whether a given number is positive or negative.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Please enter a number and I will tell you whether it is positive or negative: ");
+        int input = Convert.ToInt32(Console.ReadLine());
+        isPos(input);
+        Console.ReadKey();
+    }
+    static void isPos (int num)
+    {
+        if ( num == 0)
+            Console.WriteLine($"{0} is neither positive nor negative.");
+        else if (num > 0)
+            Console.WriteLine($"The number {num} is positive.");
+        else if (num < 0)
+            Console.WriteLine($"The number {num} is negative.");
+    }
+}
+
+
+/*
+//Conditionals #2 -- check whether a given number is even or odd.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Please enter an integer and I will tell you whether it is even or odd: ");
+        int num = Convert.ToInt32(Console.ReadLine());
+        if(num % 2 == 0)
+            Console.WriteLine($"The number {num} is even.");
+        else Console.WriteLine($"The number {num} is odd.");
+        Console.ReadKey();
+    }
+}
+
+
+/*
+//Conditionals #1 -- accept two integers and check whether they are equal or not.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Please enter a number: ");
+        int input = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Please enter another number: ");
+        int input2 = Convert.ToInt32(Console.ReadLine());
+        if (input == input2)
+            Console.WriteLine("These numbers are equal.");
+        else { Console.WriteLine("These numbers are not equal."); }
+        Console.ReadKey();
+    }
+}
+
+
+/*
+//LINQ #5 -- display the characters and frequency of character from giving string.
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Please enter a string:" );
+        string input = Console.ReadLine();
+        var letters = from l in input orderby l group l by l into g select g;
+        foreach(var v in letters)
+        {
+            Console.WriteLine($"\"{v.Key}\" occurs {v.Count()} times.");
+        }
+        Console.ReadKey();
+    }
+}
+
+
+/*
+//LINQ #4 -- display the number and frequency of number from giving array. Grouping with a query into var allows
+// data to be manipulated like a dictionary, or list, or array apparently.
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        int[] nums = new[] { 8, 3, 2, 5, 1, 9, 6, 4, 3, 5, 2, 9, 1, 2, 8 };
+        var numSets = from n in nums orderby n group n by n into g select g;
+        foreach (var num in numSets)
+        {
+            Console.WriteLine($"{num.Key} appears {num.Count()} times");
+        }
+        Console.ReadKey();
+    }
+}
+
+
+/*
+//LINQ #3 -- find the number of an array and the square of each number.
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        int[] nums = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        var sqr20plus = from n in nums where n * n > 20 orderby -n select n;
+        foreach(int i in sqr20plus)
+        {
+            Console.WriteLine($"Number = {i}, Square = {i*i}");
+        }
+        Console.ReadKey();
+    }
+}
+
+
+/*
+//LINQ #2 -- find the +ve numbers from a list of numbers using two where conditions in LINQ Query.
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        int[] nums = new[] { -5, 1, -3, -2, 3, 9, -8, 10, -14, 6 };
+        var posNums = from i in nums where i > 0 where i < 12 orderby i select i;
+        foreach(int i in posNums)
+        {
+            Console.Write($"{i} ");
+        }
+        Console.ReadKey();
+    }
+}
+
+
+/*
 //LINQ #1 -- shows how the three parts of a query operation execute.
 using System;
 using System.Linq;
@@ -18,6 +503,29 @@ class Program
             Console.Write($"{i} ");
         }
         Console.ReadKey();
+    }
+}
+
+
+/*
+//Recursion #10 -- find the Fibonacci numbers for a n numbers of series using recursion.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Please enter the number of Fibonacci numbers that you would like to see: ");
+        int num = Convert.ToInt32(Console.ReadLine());
+        Fibs(num, 0, 1);
+        Console.ReadKey();
+    }
+    static void Fibs (int count, int fib1, int fib2)
+    {
+        if (count < 1)
+            return;
+        Console.WriteLine(fib1);
+        Fibs(--count, fib2, fib1 + fib2);
     }
 }
 
